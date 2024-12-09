@@ -126,8 +126,51 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanNumerals = {
+    one: 'I',
+    five: 'V',
+    ten: 'X',
+  };
+
+  let res = '';
+
+  const makeTens = (numOfTens) => {
+    let tens = '';
+    if (numOfTens < 4) {
+      for (let i = 0; i < numOfTens; i += 1) {
+        tens += romanNumerals.one;
+      }
+    } else if (numOfTens < 9) {
+      tens += romanNumerals.five;
+
+      if (numOfTens === '4' || numOfTens === 4) {
+        tens = `${romanNumerals.one}${romanNumerals.five}`;
+        return tens;
+      }
+      for (let i = 5; i < numOfTens; i += 1) {
+        tens += romanNumerals.one;
+      }
+    } else if (numOfTens === 9 || numOfTens === '9') {
+      tens = `${romanNumerals.one}${romanNumerals.ten}`;
+    }
+
+    return tens;
+  };
+
+  if (num < 10) {
+    res = makeTens(num);
+  } else if (num < 20) {
+    res = `${romanNumerals.ten}${makeTens(num % 10)}`;
+  } else if (num < 30) {
+    res = `${romanNumerals.ten}${romanNumerals.ten}${makeTens(num % 10)}`;
+  } else if (num < 40) {
+    res = `${romanNumerals.ten}${romanNumerals.ten}${
+      romanNumerals.ten
+    }${makeTens(num % 10)}`;
+  }
+
+  return res;
 }
 
 /**
@@ -145,8 +188,57 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let res = '';
+  const len = numberStr.length;
+
+  for (let i = 0; i < len; i += 1) {
+    switch (numberStr[i]) {
+      case '0':
+        res += 'zero ';
+        break;
+      case '1':
+        res += 'one ';
+        break;
+      case '2':
+        res += 'two ';
+        break;
+      case '3':
+        res += 'three ';
+        break;
+      case '4':
+        res += 'four ';
+        break;
+      case '5':
+        res += 'five ';
+        break;
+      case '6':
+        res += 'six ';
+        break;
+      case '7':
+        res += 'seven ';
+        break;
+      case '8':
+        res += 'eight ';
+        break;
+      case '9':
+        res += 'nine ';
+        break;
+      case '-':
+        res += 'minus ';
+        break;
+      default:
+        res += 'point ';
+    }
+  }
+
+  let strWOLastSpace = '';
+
+  for (let i = 0; i < res.length - 1; i += 1) {
+    strWOLastSpace += res[i];
+  }
+
+  return strWOLastSpace;
 }
 
 /**
