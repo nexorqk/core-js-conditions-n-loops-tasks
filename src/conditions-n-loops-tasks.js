@@ -371,9 +371,56 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
-}
+const getSpiralMatrix = (size) => {
+  const matrixArr = Array(size);
+
+  for (let i = 0; i < size; i += 1) {
+    matrixArr[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrixArr[i][j] = null;
+    }
+  }
+
+  const numbersArr = [];
+
+  for (let i = 0; i < size * size; i += 1) {
+    numbersArr[i] = i + 1;
+  }
+
+  let numbesrsIdx = 0;
+
+  for (let i = 0; i < Math.round(size / 2); i += 1) {
+    for (let j = i; j < size - i; j += 1) {
+      if (j === i) {
+        for (let a = j; a < size - i; a += 1) {
+          matrixArr[j][a] = numbersArr[numbesrsIdx];
+          numbesrsIdx += 1;
+        }
+      }
+
+      if (j > i && j < size - i - 1) {
+        matrixArr[j][size - i - 1] = numbersArr[numbesrsIdx];
+        numbesrsIdx += 1;
+      }
+
+      if (j === size - i - 1 && j !== i) {
+        for (let b = size - i - 1; b > -1; b -= 1) {
+          if (matrixArr[j][b] === null) {
+            matrixArr[j][b] = numbersArr[numbesrsIdx];
+            numbesrsIdx += 1;
+          }
+        }
+      }
+    }
+
+    for (let l = size - 2 - i; l > i; l -= 1) {
+      matrixArr[l][i] = numbersArr[numbesrsIdx];
+      numbesrsIdx += 1;
+    }
+  }
+
+  return matrixArr;
+};
 
 /**
  * Rotates a matrix by 90 degrees clockwise in place.
